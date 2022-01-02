@@ -18,7 +18,6 @@ typedef struct{
 	uint32_t    reserved;
 }__attribute__((packed)) IDTDesc;
 
-void load_idt(int addr);
 void interrupts_init_desc(int index, int addr);
 void exception_handler(void);
 void idt_set_desc(uint8_t vector, void* isr, uint8_t flags);
