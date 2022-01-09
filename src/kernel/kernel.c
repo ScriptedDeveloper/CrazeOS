@@ -23,8 +23,6 @@ kmain(){
 	terminal_clear_screen();
 	idt_init();
 	print("CrazeOS > ");
-	char* input = keyboard_handler(true);
-	print(input);
-	print("\nHELPS");
+	keyboard_handler(false);
 	return 0;
 }
