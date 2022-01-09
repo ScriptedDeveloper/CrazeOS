@@ -16,9 +16,6 @@ void print(char *string){
 			term_height++;
 			term_width++;
 		}
-		else if(string[i] == '\t'){
-			vgaBuffer = 0xb + vgaBuffer + 15;
-		}
 		else if(string[i] == '\e'){
 			term_height++;
 			term_width++;
@@ -35,12 +32,7 @@ void print(char *string){
 	return;
 }
 
-terminal_clear_screen(){
-	/*
-	We multiply width by 2 because we have an 8 bit pointer instead of a 
-	16 bit. Therefore we have to increment twice on horizontal axis in 
-	order to reach to the next VGA character
-	*/	
+void terminal_clear_screen(){
 	int limit = (VGA_WIDTH * 2) * (VGA_HEIGHT); 
 	for (int i = 0; i < limit; ++i) {
 		vgaBuffer[i] = 0;
