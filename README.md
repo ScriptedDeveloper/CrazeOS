@@ -5,6 +5,10 @@ Simple work-in-progress amateur OS written in C.
 - P2/2 Keyboard Input
 - Print function
 
+# Installation
+Execute ```cd src/ && make && make run``` to get started!
+- LINUX SUPPORTED ONLY AT THE MOMENT -
+
 # WIP
 - Interrupts (IDT, GDT)
 - Simple Shell
