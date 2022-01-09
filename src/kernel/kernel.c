@@ -21,7 +21,7 @@ long khash(char *string){
 
 kmain(){
 	terminal_clear_screen();
-	idt_init();
+	//idt_init(); WIP
 	print("CrazeOS > ");
 	keyboard_handler(false);
 	return 0;
