@@ -3,7 +3,7 @@
 #include "idt/idt.h"
 
 int kcharlen(char *c){
-    int i = NULL;
+    int i;
     for(i = 1; c[i] != '\0'; i++){
         i++;
     }
