@@ -9,7 +9,7 @@
 #include "string/string.h"
 
 
-static uint8_t stack[8192];
+
 int kmain();
 int kcharlen(char *c);
 long khash(char* string);
