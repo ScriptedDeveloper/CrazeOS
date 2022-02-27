@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "keyboard/keyboard.h"
 #include "kernel/kernel.h"
+#include "string/string.h"
 
 extern int vgaBufferInt;
 extern int VGA_HEIGHT;

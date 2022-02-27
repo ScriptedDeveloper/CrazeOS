@@ -65,6 +65,7 @@ char* keyboard_handler(bool input) {
             if(c & 0x80){} else{
             if(input == true){
                if(upper_ascii_codes[c] == '\n'){
+                  cInput[i] = 0;
                   return cInput;
                }
                cInput[i] = upper_ascii_codes[c];

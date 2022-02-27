@@ -1,14 +1,5 @@
-#define CLI_PROMPT "@CrazeOS > "
 #include "kernel/kernel.h"
 #include "idt/idt.h"
-
-int kcharlen(char *c){
-    int i;
-    for(i = 1; c[i] != '\0'; i++){
-        i++;
-    }
-    return i;
-}
 
 long khash(char *string){
 	int c;
@@ -19,10 +10,13 @@ long khash(char *string){
 	return hash_val;
 }
 
+
 kmain(){
 	terminal_clear_screen();
 	//idt_init(); WIP
-	print("CrazeOS > ");
-	keyboard_handler(false);
+	command_line();
+	for(;;){
+		shell_init();
+	}
 	return 0;
 }
