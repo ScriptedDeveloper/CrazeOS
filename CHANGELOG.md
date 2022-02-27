@@ -7,4 +7,5 @@
 - Added functional shell
 - Added string manipulation library
 - Added basic commands
+- Added CHANGELOG.md
 - Fixed crucial bugs
