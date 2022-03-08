@@ -5,13 +5,14 @@ Simple work-in-progress amateur OS written in C.
 - P2/2 Keyboard Input
 - Functional shell
 - VGA Buffer
-- (Interrupts)
+- Interrupts (IDT, GDT)
+- CPU exceptions
 
 # Build from source
 Execute ```cd src/ && make && make run``` to get started!
 - LINUX SUPPORTED ONLY AT THE MOMENT -
 
 # WIP
-- Interrupts (IDT, GDT)
-- More coming soon.
+- User mode (Somewhere in the future)
+- ETC.
 
