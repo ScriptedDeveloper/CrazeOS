@@ -13,7 +13,8 @@ long khash(char *string){
 
 kmain(){
 	terminal_clear_screen();
-	//idt_init(); WIP
+	gdt_init();
+	idt_init();
 	command_line();
 	for(;;){
 		shell_init();
