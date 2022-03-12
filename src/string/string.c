@@ -34,3 +34,21 @@ int kcharlen(char *c){
     }
     return i;
 }
+
+
+void* memset(void *bufferptr, int val, size_t size){
+	uint8_t* buffer = (uint8_t*)bufferptr;
+	for(size_t i = 0; i < size; i++){
+		buffer[i] = (uint8_t)val;
+	}
+	return bufferptr;
+}
+
+char* itoa(int val, int base) {
+	static char buffer[32] = {0};
+	int i;
+	for(i = 30; val && i; i--, val/= base) {
+		buffer[i] = "0123456789abcdef"[val % base];
+	}
+	return &buffer[i+1];
+}

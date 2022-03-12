@@ -28,6 +28,6 @@ kernel.bin: $(OBJ)
 
 
 run: kernel.bin
-	qemu-system-x86_64 -kernel $<
+	qemu-system-x86_64 -m 128M -kernel $< 
 
 .PHONY: run all clean

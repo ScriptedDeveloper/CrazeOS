@@ -26,6 +26,7 @@ void shell_echo(char *str){
     command_line();
 }
 
+
 void shell_init() {
     char *command_input = keyboard_handler(true);
     char *commands[] = {"HELP", "ECHO", "ABOUT", "CLEAR"};
@@ -43,17 +44,18 @@ void shell_init() {
         }
     }
 
-    else if(strcmp(command_input, commands[2]) == 0){
+    else if(strcmp(command_input, commands[2]) == 0) {
         shell_about();
     }
     
-    else if(strcmp(command_input, commands[3]) == 0){
+    else if(strcmp(command_input, commands[3]) == 0) {
         shell_clear();
     }
 
     else if(strcmp(command_input, "\0") == 0){
 
     }
+
     else {
         print("\nCommand not found!\n");
         command_input = "\0";
