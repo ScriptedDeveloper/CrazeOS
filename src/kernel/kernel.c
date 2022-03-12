@@ -17,15 +17,10 @@ void kpanic(char *msg) {
 	__asm__ volatile("cli; hlt");
 }
 
-kmain(multiboot_info_t* mbd, uint64_t magic){
+kmain(multiboot_info_t* mbd, uint32_t magic){
 	terminal_clear_screen();
-	if(magic != MULTIBOOT_HEADER_MAGIC) { // Where the issue is
-		print("got   ");
-		print(lltoa(magic, 16));
-		print(" but need ");
-		print(lltoa(MULTIBOOT_BOOTLOADER_MAGIC, 16));
-		
-			__asm__ volatile("cli; hlt");
+	if(magic != MULTIBOOT_BOOTLOADER_MAGIC) {
+		kpanic("INVALID MAGIC NUMBER!");
 	}
 	gdt_init();
 	idt_init();
