@@ -1,5 +1,7 @@
 #include "shell.h"
 
+multiboot_info_t *mbd = NULL;
+
 void command_line(){
     print("\n\nCrazeOS > ");
 }
@@ -26,12 +28,21 @@ void shell_echo(char *str){
     command_line();
 }
 
+void shell_totalmemory() {
+    print("\nTOTAL MEMORY AVAILABLE: ");
+    print(lltoa(mbd->mem_lower + mbd->mem_upper, 10));
+    print("KB");
+    command_line();
+    
+}
 
-void shell_init() {
+
+void shell_init(multiboot_info_t *mbd_) {
     char *command_input = keyboard_handler(true);
-    char *commands[] = {"HELP", "ECHO", "ABOUT", "CLEAR"};
+    char *commands[] = {"HELP", "ECHO", "ABOUT", "CLEAR", "TOTALMEM"};
+    mbd = mbd_;
     if(strcmp(command_input, commands[0]) == 0) {
-        print("\nECHO <STRING> - STRING OUTPUT TO CONSOLE\nHELP - STRING OUTPUT TO HELP\nABOUT - PROJECT INFO\nCLEAR - RESETS VGA BUFFER TO DEFAULT");
+        print("\nECHO <STRING> - STRING OUTPUT TO CONSOLE\nHELP - STRING OUTPUT TO HELP\nABOUT - PROJECT INFO\nCLEAR - RESETS VGA BUFFER TO DEFAULT\nTOTALMEM - PRINTS TOTAL AVAILABLE MEMORY");
         command_line();
     }
 
@@ -50,6 +61,10 @@ void shell_init() {
     
     else if(strcmp(command_input, commands[3]) == 0) {
         shell_clear();
+    }
+
+    else if(strcmp(command_input, commands[4]) == 0) {
+        shell_totalmemory();
     }
 
     else if(strcmp(command_input, "\0") == 0){
