@@ -17,13 +17,16 @@ void kpanic(char *msg) {
 	__asm__ volatile("cli; hlt");
 }
 
-kmain(multiboot_info_t* mbd, uint32_t magic){
+kmain(multiboot_info_t *mbd, uint32_t magic){
 	terminal_clear_screen();
+	if(magic != MULTIBOOT_BOOTLOADER_MAGIC) {
+		kpanic("INVALID MAGIC NUMBER!");
+	}
 	gdt_init();
 	idt_init();
 	command_line();
 	for(;;){
-		shell_init();
+		shell_init(mbd);
 	}
 	return 0;
 }
