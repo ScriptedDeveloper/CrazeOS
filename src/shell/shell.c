@@ -1,6 +1,4 @@
 #include "shell.h"
-#include "video/video.h"
-
 
 void command_line(){
     print("\n\nCrazeOS > ");

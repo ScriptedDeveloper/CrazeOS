@@ -1,16 +1,13 @@
 override NASM 		:= nasm
 override CC			:= gcc
-override LD			:= i686-elf-ld
 
 CFLAGS				:= -I ../src/
 CFLAGS				+= -ffreestanding
 CFLAGS				+= -m32
 CFLAGS				+= -fno-stack-protector
 CFLAGS				+= -fno-PIE 
+
 CFLAGS				+= -g
-CFLAGS				+= -O2
-CFLAGS				+= -W
-CFLAGS				+= -Wall
 
 
 LDFLAGS				+= -m32
@@ -28,7 +25,7 @@ OBJ					:= $(S_SRC:.asm=.o) $(C_SRC:.c=.o)
 all: kernel.bin
 
 kernel.bin: $(OBJ)
-	$(CC) -T ../link.ld $(LDFLAGS) -o $@ $^ $(LIBGCC)
+	$(CC) ../link.ld $(LDFLAGS) -o $@ $^ $(LIBGCC)
 
 %.o: %.c
 	$(CC) $(CFLAGS)  -c $^ -o $@
@@ -38,6 +35,6 @@ kernel.bin: $(OBJ)
 
 
 run: kernel.bin
-	qemu-system-x86_64 -m 16M -kernel $< 
+	qemu-system-x86_64  -m 16M -kernel $< 
 
 .PHONY: run all clean
