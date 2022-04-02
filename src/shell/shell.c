@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "video/video.h"
 
 
 void command_line(){
@@ -35,12 +36,23 @@ void shell_totalmemory() {
     
 }
 
+void shell_print_mmap() {
+    print("\n");
+    print("LOW MEM : ");
+    print(lltoa(mbd->mem_lower, 10));
+    print("\nUPPER MEM : ");
+    print(lltoa(mbd->mem_upper, 10));
+    print("\nFLAGS : ");
+    print(lltoa(mbd->flags, 10));
+    command_line();
+}
+
 
 void shell_init() {
     char *command_input = keyboard_handler(true);
-    char *commands[] = {"HELP", "ECHO", "ABOUT", "CLEAR", "TOTALMEM"};
+    char *commands[] = {"HELP", "ECHO", "ABOUT", "CLEAR", "TOTALMEM", "MMAP"};
     if(strcmp(command_input, commands[0]) == 0) {
-        print("\nECHO <STRING> - STRING OUTPUT TO CONSOLE\nHELP - STRING OUTPUT TO HELP\nABOUT - PROJECT INFO\nCLEAR - RESETS VGA BUFFER TO DEFAULT\nTOTALMEM - PRINTS TOTAL AVAILABLE MEMORY");
+        print("\nECHO <STRING> - STRING OUTPUT TO CONSOLE\nHELP - STRING OUTPUT TO HELP\nABOUT - PROJECT INFO\nCLEAR - RESETS VGA BUFFER TO DEFAULT\nTOTALMEM - PRINTS TOTAL AVAILABLE MEMORY\nMMAP - PRINTS MEMORY MAP VALUES");
         command_line();
     }
 
@@ -63,6 +75,10 @@ void shell_init() {
 
     else if(strcmp(command_input, commands[4]) == 0) {
         shell_totalmemory();
+    }
+
+    else if(strcmp(command_input, commands[5]) == 0) {
+    	shell_print_mmap();
     }
 
     else if(strcmp(command_input, "\0") == 0){

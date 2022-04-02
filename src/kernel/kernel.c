@@ -19,6 +19,7 @@ void kpanic(char *msg) {
 }
 
 void kmain(multiboot_info_t *mbd_, uint32_t magic){
+	uint32_t len = mbd_->mmap_length;
 	terminal_clear_screen();
 	if(magic != MULTIBOOT_BOOTLOADER_MAGIC) {
 		kpanic("INVALID MAGIC NUMBER!");
@@ -26,10 +27,7 @@ void kmain(multiboot_info_t *mbd_, uint32_t magic){
 	mbd = mbd_;
 	gdt_init();
 	idt_init();
-	page_frame_init();
 	command_line();
-	uint32_t new_frame = frame_allocate();
-	print(lltoa(mmap_read(new_frame, MMAP_GET_ADDR), 10));
 	for(;;){
 		shell_init();
 	}
