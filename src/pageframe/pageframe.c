@@ -16,7 +16,7 @@ uint32_t mmap_read(int req, uint8_t mode) {
     multiboot_memory_map_t *current_entry;
     uint32_t i_ = 0;
     uint32_t current_end_entry;
-    while(atoi(lltoa(end_mmap_addr, 10)) > atoi(lltoa(curr_mmap_addr, 10))) {
+    while(end_mmap_addr > curr_mmap_addr, 10) {
         current_entry = curr_mmap_addr;
         for(uint64_t i = current_entry->addr; PAGE_SIZE + i < current_end_entry; i+= PAGE_SIZE) {
                 if(req <= PAGE_SIZE + i && req >= i) {
