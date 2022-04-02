@@ -1,5 +1,7 @@
 #include "kernel/kernel.h"
 
+multiboot_info_t *mbd;
+
 long khash(char *string){
 	int c;
 	long hash_val = 5381;
@@ -21,13 +23,14 @@ void kmain(multiboot_info_t *mbd_, uint32_t magic){
 	if(magic != MULTIBOOT_BOOTLOADER_MAGIC) {
 		kpanic("INVALID MAGIC NUMBER!");
 	}
+	mbd = mbd_;
 	gdt_init();
 	idt_init();
-	page_frame_init(mbd_);
-	command_line(mbd_);
+	page_frame_init();
+	command_line();
 	uint32_t new_frame = frame_allocate();
 	print(lltoa(mmap_read(new_frame, MMAP_GET_ADDR), 10));
 	for(;;){
-		shell_init(mbd_);
+		shell_init();
 	}
 }

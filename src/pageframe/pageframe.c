@@ -1,11 +1,10 @@
 #include "pageframe.h"
-#include <stdint.h>
+#include "string/string.h"
+#include "video/video.h"
 
 int free_frame;
 int mbd_start;
 int mbd_end;
-multiboot_info_t *mbd = NULL;
-
 
 uint32_t mmap_read(int req, uint8_t mode) {
     if(req == 0 || mode != MMAP_GET_ADDR || mode != MMAP_GET_NUM) {
@@ -17,7 +16,7 @@ uint32_t mmap_read(int req, uint8_t mode) {
     multiboot_memory_map_t *current_entry;
     uint32_t i_ = 0;
     uint32_t current_end_entry;
-    while(end_mmap_addr > curr_mmap_addr) {
+    while(atoi(lltoa(end_mmap_addr, 10)) > atoi(lltoa(curr_mmap_addr, 10))) {
         current_entry = curr_mmap_addr;
         for(uint64_t i = current_entry->addr; PAGE_SIZE + i < current_end_entry; i+= PAGE_SIZE) {
                 if(req <= PAGE_SIZE + i && req >= i) {
@@ -53,10 +52,8 @@ uint32_t frame_allocate() {
     return next_num;
 }
 
-void page_frame_init(multiboot_info_t *mbd_) {
+void page_frame_init() {
     int free_frame = 1;
-    int mbd_start = mbd_;
     int mbd_end = mbd + sizeof(multiboot_memory_map_t);
-    mbd = mbd;
 }
 
