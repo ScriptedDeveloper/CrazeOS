@@ -74,4 +74,3 @@ char* lltoa(long long val, int base){
     return &buf[i+1];
 
 }
-

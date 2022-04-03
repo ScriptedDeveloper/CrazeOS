@@ -1,15 +1,14 @@
 override NASM 		:= nasm
 override CC			:= gcc
+override LD			:= i686-elf-ld
 
 CFLAGS				:= -I ../src/
 CFLAGS				+= -ffreestanding
 CFLAGS				+= -m32
 CFLAGS				+= -fno-stack-protector
 CFLAGS				+= -fno-PIE 
-CFLAGS				+= -w
-CFLAGS				+= -Wall
+
 CFLAGS				+= -g
-CFLAGS				+= -O2
 
 
 LDFLAGS				+= -m32
@@ -27,7 +26,7 @@ OBJ					:= $(S_SRC:.asm=.o) $(C_SRC:.c=.o)
 all: kernel.bin
 
 kernel.bin: $(OBJ)
-	$(CC) ../link.ld $(LDFLAGS) -o $@ $^ $(LIBGCC)
+	$(CC) -T ../link.ld $(LDFLAGS) -o $@ $^ $(LIBGCC)
 
 %.o: %.c
 	$(CC) $(CFLAGS)  -c $^ -o $@
