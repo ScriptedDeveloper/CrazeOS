@@ -19,12 +19,12 @@ void kpanic(char *msg) {
 }
 
 void kmain(multiboot_info_t *mbd_, uint32_t magic){
+	print(lltoa(mbd_->flags, 10));
 	terminal_clear_screen();
 	if(magic != MULTIBOOT_BOOTLOADER_MAGIC) {
 		kpanic("INVALID MAGIC NUMBER!");
 	}
 	mbd = mbd_;
-	print(lltoa(mbd->mem_lower, 10));
 	gdt_init();
 	idt_init();
 	command_line();
