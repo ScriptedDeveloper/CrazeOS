@@ -1,5 +1,6 @@
 #include "kernel/kernel.h"
-#include "idt/idt.h"
+
+multiboot_info_t *mbd;
 
 long khash(char *string){
 	int c;
@@ -17,16 +18,17 @@ void kpanic(char *msg) {
 	__asm__ volatile("cli; hlt");
 }
 
-kmain(multiboot_info_t *mbd, uint32_t magic){
+void kmain(multiboot_info_t *mbd_, uint32_t magic){
+	print(lltoa(mbd_->flags, 10));
 	terminal_clear_screen();
 	if(magic != MULTIBOOT_BOOTLOADER_MAGIC) {
 		kpanic("INVALID MAGIC NUMBER!");
 	}
+	mbd = mbd_;
 	gdt_init();
 	idt_init();
 	command_line();
 	for(;;){
-		shell_init(mbd);
+		shell_init();
 	}
-	return 0;
 }
