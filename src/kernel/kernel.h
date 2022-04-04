@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <stddef.h>
+#include <stdarg.h>
 #include "multiboot/multiboot.h"
 #include "keyboard/keyboard.h"
 #include "video/video.h"
@@ -9,6 +10,7 @@
 #include "gdt/gdt.h"
 #include "idt/idt.h"
 #include "idt/isr.h"
+
 
 int kmain();
 int kcharlen(char *c);

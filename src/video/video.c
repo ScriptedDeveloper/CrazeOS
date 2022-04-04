@@ -7,10 +7,10 @@ int vgaBufferInt = 8000; // to change newlines
 int term_height = 0;
 int term_width = 0;
 
+void putchar(char c);
+
 void print(char *string){
 	for(long i = 0; string[i] != '\0'; i++){
-		const int id = (VGA_HEIGHT * term_width) + term_height;
-		term_height++;
 		if(string[i] == '\n'){
  			term_height = 0;
  			term_width++; term_width++;
@@ -20,14 +20,19 @@ void print(char *string){
 			print("CrazeOS > ");
 		}
 		else{
-		vgaBuffer[id] = string[i];
-		term_height++;
-		vgaBuffer[id + 1] = 15;
+			putchar(string[i]);
 		}
 	}
 	return;
 }
 
+void putchar(char c){
+	const int id = (VGA_HEIGHT * term_width) + term_height;
+	term_height++;
+	vgaBuffer[id] = c;
+	term_height++;
+	vgaBuffer[id + 1] = 15;
+}
 
 void terminal_clear_screen(){
 	term_height = 0;
@@ -36,5 +41,47 @@ void terminal_clear_screen(){
 	for (int i = 0; i < limit; ++i) {
 		vgaBuffer[i] = 0;
 	}
-	return;
+}
+
+void printf(char *args, ...){
+	va_list ap;
+	va_start(ap, args);
+	char *s;
+	char c;
+	int i;
+	uint32_t x;
+	for(; *args != '\0'; args++) {
+		if(*args != '%') {
+			print(*args);
+			args++;
+		}
+		args++;
+		switch(*args) {
+			case 's' :
+				s = va_arg(ap, char*);
+				args++;
+				print(s);
+				break;
+
+			case 'c' : 
+				c = va_arg(ap, int);
+				args++;
+				putchar(c);
+				break;
+
+			case 'i' :
+				i = va_arg(ap, int);
+				print(itoa(i, 10));
+				args++;
+				break;
+			
+			case 'x' :
+				x = va_arg(ap, uint32_t);
+				print("0x");
+				print(itoa(x, 16));
+				args++;
+				break;
+		}
+	}
+	va_end(ap);
 }

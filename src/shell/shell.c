@@ -1,6 +1,6 @@
 #include "shell.h"
 
-multiboot_info_t *mbd = NULL;
+multiboot_info_t *mbd_shell;
 
 void command_line(){
     print("\n\nCrazeOS > ");
@@ -30,19 +30,27 @@ void shell_echo(char *str){
 
 void shell_totalmemory() {
     print("\nTOTAL MEMORY AVAILABLE: ");
-    print(lltoa(mbd->mem_lower + mbd->mem_upper, 10));
+    print(lltoa(mbd_shell->mem_lower + mbd_shell->mem_upper, 10));
     print("KB");
     command_line();
-    
 }
 
+void shell_print_mmap() {
+    print("\nFLAGS: ");
+    print(lltoa(mbd_shell->flags, 10));
+    print("\nLOWER MEMORY : ");
+    print(lltoa(mbd_shell->mem_lower, 10));
+    print("\nHIGHER MEMORY : ");
+    print(lltoa(mbd_shell->mem_upper, 10));
+    command_line();
+}
 
 void shell_init(multiboot_info_t *mbd_) {
     char *command_input = keyboard_handler(true);
-    char *commands[] = {"HELP", "ECHO", "ABOUT", "CLEAR", "TOTALMEM"};
-    mbd = mbd_;
+    char *commands[] = {"HELP", "ECHO", "ABOUT", "CLEAR", "TOTALMEM", "MMAP"};
+    mbd_shell = mbd_;
     if(strcmp(command_input, commands[0]) == 0) {
-        print("\nECHO <STRING> - STRING OUTPUT TO CONSOLE\nHELP - STRING OUTPUT TO HELP\nABOUT - PROJECT INFO\nCLEAR - RESETS VGA BUFFER TO DEFAULT\nTOTALMEM - PRINTS TOTAL AVAILABLE MEMORY");
+        print("\nECHO <STRING> - STRING OUTPUT TO CONSOLE\nHELP - STRING OUTPUT TO HELP\nABOUT - PROJECT INFO\nCLEAR - RESETS VGA BUFFER TO DEFAULT\nTOTALMEM - PRINTS TOTAL AVAILABLE MEMORY\nMMAP - PRINTS ENTIRE MEMORY MAP");
         command_line();
     }
 
@@ -65,6 +73,10 @@ void shell_init(multiboot_info_t *mbd_) {
 
     else if(strcmp(command_input, commands[4]) == 0) {
         shell_totalmemory();
+    }
+
+    else if(strcmp(command_input, commands[5]) == 0) {
+	shell_print_mmap();	    
     }
 
     else if(strcmp(command_input, "\0") == 0){
