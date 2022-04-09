@@ -52,34 +52,29 @@ void printf(char *args, ...){
 	uint32_t x;
 	for(; *args != '\0'; args++) {
 		if(*args != '%') {
-			print(*args);
 			args++;
 		}
 		args++;
 		switch(*args) {
 			case 's' :
 				s = va_arg(ap, char*);
-				args++;
 				print(s);
 				break;
 
 			case 'c' : 
 				c = va_arg(ap, int);
-				args++;
 				putchar(c);
 				break;
 
-			case 'i' :
+			case 'd' :
 				i = va_arg(ap, int);
 				print(itoa(i, 10));
-				args++;
 				break;
 			
 			case 'x' :
 				x = va_arg(ap, uint32_t);
 				print("0x");
 				print(itoa(x, 16));
-				args++;
 				break;
 		}
 	}

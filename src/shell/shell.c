@@ -36,12 +36,13 @@ void shell_totalmemory() {
 }
 
 void shell_print_mmap() {
-    print("\nFLAGS: ");
-    print(lltoa(mbd_shell->flags, 10));
-    print("\nLOWER MEMORY : ");
-    print(lltoa(mbd_shell->mem_lower, 10));
-    print("\nHIGHER MEMORY : ");
-    print(lltoa(mbd_shell->mem_upper, 10));
+    for(int i = 0; i < mbd_shell->mmap_length; i += sizeof(multiboot_memory_map_t)) {
+    	multiboot_memory_map_t *mmmt = (multiboot_memory_map_t*) (mbd_shell->mmap_addr + i);
+    	printf("%s%x", "\nSTART ADDR : " ,mmmt->addr);
+	printf("%s%x", " LEN : ", mmmt->len);
+	printf("%s%d", " TYPE : ", mmmt->type);
+ 	printf("%s%x", " SIZE : ", mmmt->size);
+    }
     command_line();
 }
 
