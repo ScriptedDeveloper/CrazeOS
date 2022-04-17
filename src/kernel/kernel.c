@@ -17,7 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "kernel/kernel.h"
-#include "idt/idt.h"
 
 long khash(char *string){
 	int c;
