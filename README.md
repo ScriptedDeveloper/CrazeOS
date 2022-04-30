@@ -1,6 +1,9 @@
 # CrazeOS
 Simple work-in-progress amateur OS written in C.
 
+# Showcase
+![](https://raw.githubusercontent.com/ScriptedDeveloper/CrazeOS/main/Example.gif)
+
 # Features
 - P2/2 Keyboard Input
 - Printf function
