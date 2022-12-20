@@ -38,4 +38,7 @@ kernel.bin: $(OBJ)
 run: kernel.bin
 	qemu-system-x86_64 -m 10M -kernel $< 
 
+clean:
+	rm -rf */*.o
+
 .PHONY: run all clean
