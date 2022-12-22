@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include "multiboot/multiboot.h"
 #include "keyboard/keyboard.h"
+#include "../memory/memory.h"
 #include "video/video.h"
 #include "shell/shell.h"
 #include "string/string.h"

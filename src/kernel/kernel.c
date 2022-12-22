@@ -41,6 +41,7 @@ int kmain(multiboot_info_t *mbd, uint32_t magic){
 	}
 	gdt_init();
 	idt_init();
+	heap_init();
 	command_line();
 	for(;;){
 		shell_init(mbd);
