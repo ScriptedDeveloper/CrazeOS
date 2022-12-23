@@ -42,11 +42,7 @@ int kmain(multiboot_info_t *mbd, uint32_t magic){
 	gdt_init();
 	idt_init();
 	init_paging(mbd);
-	for(int i = 0; i<=3; i++) {
-		char *addr1 = allocate_page(1);
-		print(itoa(&addr1, 16));
-		print("\n");
-	}
+	char *asd = allocate_page(20000000000000000000000000000000000000000000000);
 	//fs_init();
 	command_line();
 	for(;;){

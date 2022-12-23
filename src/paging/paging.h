@@ -9,5 +9,7 @@ typedef struct {
 } memory_region_t;
 
 void init_paging(multiboot_info_t *map);
-void *allocate_page();
+void *allocate_page(int pages);
 void deallocate_page(void *base_addr);
+void *malloc(size_t size);
+void free(void *ptr);
