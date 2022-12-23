@@ -13,6 +13,5 @@ SECTIONS
 		. = 0x100000;
 		.text : { *(.text) } > text
 		.data :{ *(.data) }  > data
-		heap : AT(ADDR(heap) + 0) { *(.heap) } > heap
 		.bss : { *(.bss) }  > bss
 	}
