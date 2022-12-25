@@ -1,5 +1,6 @@
 OUTPUT_FORMAT(elf32-i386)
 ENTRY(start)
+
 MEMORY 
 {
 	heap : ORIGIN = 0x200000, LENGTH = 0x100000 
@@ -9,11 +10,12 @@ MEMORY
 }
 
 SECTIONS
-	{
-		kernel_start = .;
-		. = 0x100000;
-		.text : { *(.text) } > text
-		.data :{ *(.data) }  > data
-		.bss : { *(.bss) }  > bss
-		kernel_end = .;
-	}
+{
+	. = 0x100000;
+	kernel_start = .;
+	.text : { *(.text) } > text
+	.data : { *(.data) } > data
+	.bss : { *(.bss) } > bss
+	kernel_end = .;
+}
+

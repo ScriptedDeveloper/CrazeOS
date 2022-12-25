@@ -16,4 +16,3 @@ int kmain();
 int kcharlen(char *c);
 long khash(char* string);
 void kpanic(char *msg);
-extern uintptr_t kernel_start, kernel_end;

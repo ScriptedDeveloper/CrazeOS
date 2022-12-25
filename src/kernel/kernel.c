@@ -36,13 +36,14 @@ void kpanic(char *msg) {
 
 int kmain(multiboot_info_t *mbd, uint32_t magic){
 	terminal_clear_screen();
+	page_directory *pd;
 	if(magic != MULTIBOOT_BOOTLOADER_MAGIC) {
 		kpanic("INVALID MAGIC NUMBER!");
 	}
 	gdt_init();
 	idt_init();
-	init_paging(mbd);
-	char *asd = allocate_page(20000000000000000000000000000000000000000000000);
+	init_paging(pd);
+	init_page_frame_allocator(mbd);
 	//fs_init();
 	command_line();
 	for(;;){

@@ -11,9 +11,11 @@
  
 memory_region_t *available_regions[MAX_PAGES];
 memory_region_t *taken_regions[MAX_PAGES];
+page_table *pt;
 int regions = 0;
+extern uintptr_t kernel_start, kernel_end;
  
-void init_paging(multiboot_info_t *map) {
+void init_page_frame_allocator(multiboot_info_t *map) {
 	int count_regions = 0;
 	size_t kernel_length = kernel_end - kernel_start;
 	for(int i = 0; i < map->mmap_length; i += sizeof(multiboot_memory_map_t)) {
@@ -32,9 +34,24 @@ void init_paging(multiboot_info_t *map) {
 		print(itoa(mmmt->addr, 16));
 	}
 	regions = count_regions;
+}
+
+void init_paging(page_directory *pd) {
+	for(uintptr_t i = kernel_start; i < kernel_end; i += 4096) {
+		int i_pt = (i >> 12) & 0x3FF ,i_pd = i >> 22;
+		page_entry *pe = (page_entry*) pd[i_pd].entries[i_pt]; // pointing to current entry
+		pe->present = true; // making memory exist
+		pe->rw = true; // setting to write
+		pe->frame_addr = i >> 12; // setting frame addr to memory addr
+	}
+	__asm__ volatile("mov %0, %%eax" :: "r" ((uintptr_t)pd)); // move the value of pd into eax
+	__asm__ volatile("mov %%eax, %%cr3" ::: "eax"); // move the value of eax into cr3
+	__asm__ volatile("mov %%cr0, %%eax" ::: "eax"); // move the value of cr0 into eax
+	__asm__ volatile("or $0x80000001, %%eax" ::: "eax"); // set the appropriate bit in eax to enable paging
+	__asm__ volatile("mov %%eax, %%cr0" ::: "eax"); // move the value of eax into cr0 to enable paging
+
 	print("\n");
 	printf("%s", "Successfully loaded paging!");
-
 }
  
 void* allocate_page(int pages) {
