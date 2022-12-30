@@ -48,7 +48,7 @@ int strncmp(char *str1, char* str2, int len){
 
 int kcharlen(char *c){
     int i;
-    for(i = 1; c[i] != '\0'; i++){
+    for(i = 0; c[i] != '\0'; i++){
     }
     return i;
 }
