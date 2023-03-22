@@ -1,5 +1,4 @@
 #pragma once
-#define bool int
 #include <stdbool.h>
 #include "keyboard/keyboard.h"
 #include "kernel/kernel.h"

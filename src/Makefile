@@ -26,16 +26,19 @@ OBJ					:= $(S_SRC:.asm=.o) $(C_SRC:.c=.o)
 all: kernel.bin
 
 kernel.bin: $(OBJ)
-	$(CC) -T ../link.ld $(LDFLAGS) -o $@ $^ $(LIBGCC)
+	$(CC) -g -T ../link.ld $(LDFLAGS) -o $@ $^ $(LIBGCC)
 
 %.o: %.c
 	$(CC) $(CFLAGS)  -c $^ -o $@
 
 %.o: %.asm
-	$(NASM) -felf32 $^ -o $@
+	$(NASM) -g -felf32 $^ -o $@
 
 
 run: kernel.bin
-	qemu-system-x86_64 -m 10M -kernel $< 
+	qemu-system-x86_64 -s -S -m 10M -kernel $< 
+
+clean:
+	rm -rf */*.o
 
 .PHONY: run all clean

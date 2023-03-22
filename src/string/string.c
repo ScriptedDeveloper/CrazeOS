@@ -90,5 +90,13 @@ char* lltoa(long long val, int base){
         buf[i--] = '-';
     }
     return &buf[i+1];
+}
 
+char *strcpy(char *dest, const char *src) {
+    char *p = dest;
+    while (*src != '\0') {
+        *dest++ = *src++;
+    }
+    *dest = '\0';
+    return p;
 }
